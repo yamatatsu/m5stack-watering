@@ -80,12 +80,12 @@ const logGroup = new logs.LogGroup(stack, "LogGroup", {
 new iot.TopicRule(stack, "TopicRule", {
 	topicRuleName: "M5StackWateringRule",
 	sql: iot.IotSql.fromStringAsVer20160323(
-		"SELECT topic() as topic, topic(3) + topic(4) as sensorName, timestamp() as timestamp, * FROM '/M5StackWatering/devices/+/moisture'",
+		"SELECT topic() as topic, topic(3) + topic(4) as sensorName, timestamp() as timestamp, * FROM 'M5StackWatering/devices/+/moisture'",
 	),
 	actions: [
 		new CloudWatchLogsAction(logGroup),
 		new CloudWatchPutMetricAction({
-			metricName: "moisture",
+			metricName: "${topic(3)}${topic(4)}",
 			metricNamespace: "M5StackWatering",
 			metricUnit: "None",
 			metricValue: "${moisture}",

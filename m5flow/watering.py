@@ -42,6 +42,6 @@ while True:
   label0.set_text(str(moisture))
   bargraph0.addSample(moisture)
   graph0.addSample(moisture)
-  aws.publish(str('/M5StackWatering/devices/watering001/moisture'),str((py_2_json({'moisture':moisture}))))
+  aws.publish(str('M5StackWatering/devices/watering001/moisture'),str((py_2_json({'moisture':moisture}))))
   wait(600)
   wait_ms(2)

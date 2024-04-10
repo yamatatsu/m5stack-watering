@@ -23,9 +23,6 @@ const input = new iotevents.Input(stack, "Input", {
 	attributeJsonPaths: ["sensorName", "moisture"],
 });
 
-const threshold = iotevents.Expression.fromString("2000");
-const moisture = iotevents.Expression.inputAttribute(input, "moisture");
-
 const wet = new iotevents.State({
 	stateName: "wet",
 	onEnter: [
@@ -62,8 +59,10 @@ const dry = new iotevents.State({
 		},
 	],
 });
-wet.transitionTo(dry, { when: iotevents.Expression.gte(moisture, threshold) });
-dry.transitionTo(wet, { when: iotevents.Expression.lt(moisture, threshold) });
+const threshold = iotevents.Expression.fromString("100");
+const moisture = iotevents.Expression.inputAttribute(input, "moisture");
+wet.transitionTo(dry, { when: iotevents.Expression.lt(moisture, threshold) });
+dry.transitionTo(wet, { when: iotevents.Expression.gte(moisture, threshold) });
 
 new iotevents.DetectorModel(stack, "DetectorModel", {
 	detectorKey: "sensorName",

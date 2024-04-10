@@ -2,9 +2,9 @@ from m5stack import *
 from m5stack_ui import *
 from uiflow import *
 from m5ui import M5ChartGraph, M5BarGraph
+import time
 from IoTcloud.AWS import AWS
 from libs.json_py import *
-import time
 import unit
 
 
@@ -24,6 +24,14 @@ label0 = M5Label('label0', x=20, y=18, color=0x000, font=FONT_MONT_38, parent=No
 
 
 
+def buttonB_wasPressed():
+  global moisture
+  Watering_0.set_pump_status(1)
+  wait(10)
+  Watering_0.set_pump_status(0)
+  pass
+btnB.wasPressed(buttonB_wasPressed)
+
 
 Watering_0.set_pump_status(0)
 screen.set_screen_brightness(50)
@@ -34,10 +42,6 @@ while True:
   label0.set_text(str(moisture))
   bargraph0.addSample(moisture)
   graph0.addSample(moisture)
-  aws.publish(str('/M5StackWatering/watering001/moisture'),str((py_2_json({'moisture':(Watering_0.get_adc_value())}))))
-  if (Watering_0.get_adc_value()) < 1000:
-    Watering_0.set_pump_status(0)
-  else:
-    Watering_0.set_pump_status(0)
+  aws.publish(str('/M5StackWatering/devices/watering001/moisture'),str((py_2_json({'moisture':moisture}))))
   wait(600)
   wait_ms(2)

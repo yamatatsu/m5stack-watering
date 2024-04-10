@@ -20,7 +20,7 @@ const stack = new cdk.Stack(app, "M5StackWateringStack");
 // IoT Events
 
 const input = new iotevents.Input(stack, "Input", {
-	attributeJsonPaths: ["sensorName", "moisture"],
+	attributeJsonPaths: ["deviceName", "sensorName", "moisture"],
 });
 
 const wet = new iotevents.State({
@@ -49,7 +49,19 @@ const dry = new iotevents.State({
 		{
 			eventName: "timed-out",
 			condition: iotevents.Expression.timeout("watering-timer"),
-			actions: [],
+			actions: [
+				{
+					_bind(stack) {
+						return {
+							configuration: {
+								iotTopicPublish: {
+									mqttTopic: "M5StackWatering/cloud/${deviceName}/pump",
+								},
+							},
+						};
+					},
+				},
+			],
 		},
 	],
 	onExit: [
@@ -80,7 +92,15 @@ const logGroup = new logs.LogGroup(stack, "LogGroup", {
 new iot.TopicRule(stack, "TopicRule", {
 	topicRuleName: "M5StackWateringRule",
 	sql: iot.IotSql.fromStringAsVer20160323(
-		"SELECT topic() as topic, topic(3) + topic(4) as sensorName, timestamp() as timestamp, * FROM 'M5StackWatering/devices/+/moisture'",
+		f(`
+			SELECT
+				topic() as topic,
+				topic(3) as deviceName,
+				topic(3) + topic(4) as sensorName,
+				timestamp() as timestamp,
+				*
+			FROM 'M5StackWatering/devices/+/moisture'
+		`),
 	),
 	actions: [
 		new CloudWatchLogsAction(logGroup),
@@ -94,3 +114,7 @@ new iot.TopicRule(stack, "TopicRule", {
 	],
 	errorAction: new CloudWatchLogsAction(logGroup),
 });
+
+function f(str: string) {
+	return str.trim().replace(/\t/g, "").replace(/\n/g, " ");
+}

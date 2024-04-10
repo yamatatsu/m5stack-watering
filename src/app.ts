@@ -4,7 +4,12 @@ import {
 	IotEventsPutMessageAction,
 } from "@aws-cdk/aws-iot-actions-alpha";
 import * as iot from "@aws-cdk/aws-iot-alpha";
-import {} from "@aws-cdk/aws-iotevents-actions-alpha";
+import {
+	ClearTimerAction,
+	SetTimerAction,
+	SetVariableAction,
+	TimerDuration,
+} from "@aws-cdk/aws-iotevents-actions-alpha";
 import * as iotevents from "@aws-cdk/aws-iotevents-alpha";
 import * as cdk from "aws-cdk-lib";
 import * as logs from "aws-cdk-lib/aws-logs";
@@ -31,7 +36,33 @@ const wet = new iotevents.State({
 		},
 	],
 });
-const dry = new iotevents.State({ stateName: "dry" });
+const dry = new iotevents.State({
+	stateName: "dry",
+	onEnter: [
+		{
+			eventName: "enter-dry",
+			actions: [
+				new SetTimerAction(
+					"watering-timer",
+					TimerDuration.fromDuration(cdk.Duration.days(1)),
+				),
+			],
+		},
+	],
+	onInput: [
+		{
+			eventName: "timed-out",
+			condition: iotevents.Expression.timeout("watering-timer"),
+			actions: [],
+		},
+	],
+	onExit: [
+		{
+			eventName: "exit-dry",
+			actions: [new ClearTimerAction("watering-timer")],
+		},
+	],
+});
 wet.transitionTo(dry, { when: iotevents.Expression.gte(moisture, threshold) });
 dry.transitionTo(wet, { when: iotevents.Expression.lt(moisture, threshold) });
 

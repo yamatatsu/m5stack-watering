@@ -11,6 +11,12 @@ dependencies:
   '@aws-cdk/aws-iot-alpha':
     specifier: 2.136.0-alpha.0
     version: 2.136.0-alpha.0(aws-cdk-lib@2.136.0)(constructs@10.3.0)
+  '@aws-cdk/aws-iotevents-actions-alpha':
+    specifier: 2.136.0-alpha.0
+    version: 2.136.0-alpha.0(@aws-cdk/aws-iotevents-alpha@2.136.0-alpha.0)(aws-cdk-lib@2.136.0)(constructs@10.3.0)
+  '@aws-cdk/aws-iotevents-alpha':
+    specifier: 2.136.0-alpha.0
+    version: 2.136.0-alpha.0(aws-cdk-lib@2.136.0)(constructs@10.3.0)
   aws-cdk-lib:
     specifier: 2.136.0
     version: 2.136.0(constructs@10.3.0)
@@ -77,6 +83,19 @@ packages:
       aws-cdk-lib: ^2.136.0
       constructs: ^10.0.0
     dependencies:
+      aws-cdk-lib: 2.136.0(constructs@10.3.0)
+      constructs: 10.3.0
+    dev: false
+
+  /@aws-cdk/aws-iotevents-actions-alpha@2.136.0-alpha.0(@aws-cdk/aws-iotevents-alpha@2.136.0-alpha.0)(aws-cdk-lib@2.136.0)(constructs@10.3.0):
+    resolution: {integrity: sha512-SOR5x4dp0RLWdKkuuBH57ZuXwQ+hyum6wWAuvs7Jfm2faCIjuAJL5Rca0z0/8Ap83yxmB+PR2ozWZQaMkpzYlw==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      '@aws-cdk/aws-iotevents-alpha': 2.136.0-alpha.0
+      aws-cdk-lib: ^2.136.0
+      constructs: ^10.0.0
+    dependencies:
+      '@aws-cdk/aws-iotevents-alpha': 2.136.0-alpha.0(aws-cdk-lib@2.136.0)(constructs@10.3.0)
       aws-cdk-lib: 2.136.0(constructs@10.3.0)
       constructs: 10.3.0
     dev: false

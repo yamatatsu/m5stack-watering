@@ -7,7 +7,6 @@ import * as iot from "@aws-cdk/aws-iot-alpha";
 import {
 	ClearTimerAction,
 	SetTimerAction,
-	SetVariableAction,
 	TimerDuration,
 } from "@aws-cdk/aws-iotevents-actions-alpha";
 import * as iotevents from "@aws-cdk/aws-iotevents-alpha";
@@ -82,7 +81,7 @@ const logGroup = new logs.LogGroup(stack, "LogGroup", {
 new iot.TopicRule(stack, "TopicRule", {
 	topicRuleName: "M5StackWateringRule",
 	sql: iot.IotSql.fromStringAsVer20160323(
-		"SELECT topic() as topic, topic(2) + topic(3) as sensorName, timestamp() as timestamp, * FROM '/M5StackWatering/+/moisture'",
+		"SELECT topic() as topic, topic(3) + topic(4) as sensorName, timestamp() as timestamp, * FROM '/M5StackWatering/devices/+/moisture'",
 	),
 	actions: [
 		new CloudWatchLogsAction(logGroup),

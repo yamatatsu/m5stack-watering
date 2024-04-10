@@ -1,19 +1,32 @@
-import * as cdk from 'aws-cdk-lib';
-import { M5StackWateringStack } from '../lib/m5stack-watering-stack';
+import {
+	CloudWatchLogsAction,
+	CloudWatchPutMetricAction,
+} from "@aws-cdk/aws-iot-actions-alpha";
+import * as iot from "@aws-cdk/aws-iot-alpha";
+import * as cdk from "aws-cdk-lib";
+import * as logs from "aws-cdk-lib/aws-logs";
 
 const app = new cdk.App();
-new M5StackWateringStack(app, 'M5StackWateringStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
+const stack = new cdk.Stack(app, "M5StackWateringStack");
 
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+const logGroup = new logs.LogGroup(stack, "LogGroup", {
+	logGroupName: "/M5StackWateringRule",
+	removalPolicy: cdk.RemovalPolicy.DESTROY,
+});
 
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
-
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+new iot.TopicRule(stack, "TopicRule", {
+	topicRuleName: "M5StackWateringRule",
+	sql: iot.IotSql.fromStringAsVer20160323(
+		"SELECT topic() as topic, topic(2) + topic(3) as sensorName, timestamp() as timestamp, * FROM '/M5StackWatering/+/moisture'",
+	),
+	actions: [
+		new CloudWatchLogsAction(logGroup),
+		new CloudWatchPutMetricAction({
+			metricName: "moisture",
+			metricNamespace: "M5StackWatering",
+			metricUnit: "None",
+			metricValue: "${moisture}",
+		}),
+	],
+	errorAction: new CloudWatchLogsAction(logGroup),
 });

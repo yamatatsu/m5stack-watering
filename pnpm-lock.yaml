@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@aws-cdk/aws-iot-actions-alpha':
+    specifier: 2.136.0-alpha.0
+    version: 2.136.0-alpha.0(@aws-cdk/aws-iot-alpha@2.136.0-alpha.0)(@aws-cdk/aws-iotevents-alpha@2.136.0-alpha.0)(@aws-cdk/aws-kinesisfirehose-alpha@2.136.0-alpha.0)(@aws-cdk/aws-kinesisfirehose-destinations-alpha@2.136.0-alpha.0)(aws-cdk-lib@2.136.0)(constructs@10.3.0)
+  '@aws-cdk/aws-iot-alpha':
+    specifier: 2.136.0-alpha.0
+    version: 2.136.0-alpha.0(aws-cdk-lib@2.136.0)(constructs@10.3.0)
   aws-cdk-lib:
     specifier: 2.136.0
     version: 2.136.0(constructs@10.3.0)
@@ -41,6 +47,73 @@ packages:
 
   /@aws-cdk/asset-node-proxy-agent-v6@2.0.3:
     resolution: {integrity: sha512-twhuEG+JPOYCYPx/xy5uH2+VUsIEhPTzDY0F1KuB+ocjWWB/KEDiOVL19nHvbPCB6fhWnkykXEMJ4HHcKvjtvg==}
+    dev: false
+
+  /@aws-cdk/aws-iot-actions-alpha@2.136.0-alpha.0(@aws-cdk/aws-iot-alpha@2.136.0-alpha.0)(@aws-cdk/aws-iotevents-alpha@2.136.0-alpha.0)(@aws-cdk/aws-kinesisfirehose-alpha@2.136.0-alpha.0)(@aws-cdk/aws-kinesisfirehose-destinations-alpha@2.136.0-alpha.0)(aws-cdk-lib@2.136.0)(constructs@10.3.0):
+    resolution: {integrity: sha512-uPicQicRDJky+1Aw/IEURGYrr+uAFcGbEpkGNMQj1gGqSo9+dKdpekt5EmvbeMXjmsczuELqKJ2+sCKE8lzF7w==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      '@aws-cdk/aws-iot-alpha': 2.136.0-alpha.0
+      '@aws-cdk/aws-iotevents-alpha': 2.136.0-alpha.0
+      '@aws-cdk/aws-kinesisfirehose-alpha': 2.136.0-alpha.0
+      '@aws-cdk/aws-kinesisfirehose-destinations-alpha': 2.136.0-alpha.0
+      aws-cdk-lib: ^2.136.0
+      constructs: ^10.0.0
+    dependencies:
+      '@aws-cdk/aws-iot-alpha': 2.136.0-alpha.0(aws-cdk-lib@2.136.0)(constructs@10.3.0)
+      '@aws-cdk/aws-iotevents-alpha': 2.136.0-alpha.0(aws-cdk-lib@2.136.0)(constructs@10.3.0)
+      '@aws-cdk/aws-kinesisfirehose-alpha': 2.136.0-alpha.0(aws-cdk-lib@2.136.0)(constructs@10.3.0)
+      '@aws-cdk/aws-kinesisfirehose-destinations-alpha': 2.136.0-alpha.0(@aws-cdk/aws-kinesisfirehose-alpha@2.136.0-alpha.0)(aws-cdk-lib@2.136.0)(constructs@10.3.0)
+      aws-cdk-lib: 2.136.0(constructs@10.3.0)
+      constructs: 10.3.0
+    dev: false
+    bundledDependencies:
+      - case
+
+  /@aws-cdk/aws-iot-alpha@2.136.0-alpha.0(aws-cdk-lib@2.136.0)(constructs@10.3.0):
+    resolution: {integrity: sha512-aiT4fOE0ld/wMnvCgqp0qRYP2q6dw6W0F/PmSEkK9naB4zRBe9I+Q79op0G6B7z6IbWQkmiLRaYtraJmtnuX6g==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      aws-cdk-lib: ^2.136.0
+      constructs: ^10.0.0
+    dependencies:
+      aws-cdk-lib: 2.136.0(constructs@10.3.0)
+      constructs: 10.3.0
+    dev: false
+
+  /@aws-cdk/aws-iotevents-alpha@2.136.0-alpha.0(aws-cdk-lib@2.136.0)(constructs@10.3.0):
+    resolution: {integrity: sha512-DDwtpqQeqtatbp9IHYTSK8Lfu1o3QzMTT5dXgvJ/5JgmezrsASH2ltZBEu0slp/Bw8zFOHVIMChLmT1pcYzpJw==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      aws-cdk-lib: ^2.136.0
+      constructs: ^10.0.0
+    dependencies:
+      aws-cdk-lib: 2.136.0(constructs@10.3.0)
+      constructs: 10.3.0
+    dev: false
+
+  /@aws-cdk/aws-kinesisfirehose-alpha@2.136.0-alpha.0(aws-cdk-lib@2.136.0)(constructs@10.3.0):
+    resolution: {integrity: sha512-k4EFf6FIl26aZaVPD0zboJw7PRIdTzdELKKH8VxfYwU7T8gWKYiE+EwnJ+2P7hYwhXXtaCXWURllAA/If+JvPQ==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      aws-cdk-lib: ^2.136.0
+      constructs: ^10.0.0
+    dependencies:
+      aws-cdk-lib: 2.136.0(constructs@10.3.0)
+      constructs: 10.3.0
+    dev: false
+
+  /@aws-cdk/aws-kinesisfirehose-destinations-alpha@2.136.0-alpha.0(@aws-cdk/aws-kinesisfirehose-alpha@2.136.0-alpha.0)(aws-cdk-lib@2.136.0)(constructs@10.3.0):
+    resolution: {integrity: sha512-K3CA0+6JNUlbsm4DOdNZ3XF+aVznZQrVZydxy7hf4E59EvXlbWY6FCtHlB8vUheaKIRRQBJbMCHxEVb/TYacoQ==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      '@aws-cdk/aws-kinesisfirehose-alpha': 2.136.0-alpha.0
+      aws-cdk-lib: ^2.136.0
+      constructs: ^10.0.0
+    dependencies:
+      '@aws-cdk/aws-kinesisfirehose-alpha': 2.136.0-alpha.0(aws-cdk-lib@2.136.0)(constructs@10.3.0)
+      aws-cdk-lib: 2.136.0(constructs@10.3.0)
+      constructs: 10.3.0
     dev: false
 
   /@biomejs/biome@1.6.4:

@@ -11,6 +11,7 @@ import {
 } from "@aws-cdk/aws-iotevents-actions-alpha";
 import * as iotevents from "@aws-cdk/aws-iotevents-alpha";
 import * as cdk from "aws-cdk-lib";
+import * as iam from "aws-cdk-lib/aws-iam";
 import * as logs from "aws-cdk-lib/aws-logs";
 
 const app = new cdk.App();
@@ -76,9 +77,21 @@ const moisture = iotevents.Expression.inputAttribute(input, "moisture");
 wet.transitionTo(dry, { when: iotevents.Expression.lt(moisture, threshold) });
 dry.transitionTo(wet, { when: iotevents.Expression.gte(moisture, threshold) });
 
+const detectorModelRole = new iam.Role(stack, "DetectorModelRole", {
+	assumedBy: new iam.ServicePrincipal("iotevents.amazonaws.com"),
+	inlinePolicies: {
+		iotCore: new iam.PolicyDocument({
+			statements: [
+				new iam.PolicyStatement({ actions: ["iot:Publish"], resources: ["*"] }),
+			],
+		}),
+	},
+});
+
 new iotevents.DetectorModel(stack, "DetectorModel", {
 	detectorKey: "sensorName",
 	initialState: wet,
+	role: detectorModelRole,
 });
 
 // ======================

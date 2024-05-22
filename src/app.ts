@@ -71,7 +71,7 @@ const dry = new iotevents.State({
 		},
 	],
 });
-const threshold = iotevents.Expression.fromString("100");
+const threshold = iotevents.Expression.fromString("180");
 const moisture = iotevents.Expression.inputAttribute(input, "moisture");
 wet.transitionTo(dry, { when: iotevents.Expression.lt(moisture, threshold) });
 dry.transitionTo(wet, { when: iotevents.Expression.gte(moisture, threshold) });
